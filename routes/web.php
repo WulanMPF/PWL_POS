@@ -20,17 +20,23 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/level', [LevelController::class, 'index']);
+Route::get('/user', [UserController::class, 'index']);
+Route::get('/user/create', [UserController::class, 'create'])->name('user.create');
+Route::post('/user', [UserController::class, 'store']);
+Route::get('/user/edit/{id}', [UserController::class, 'edit']);
+Route::put('/user/{id}', [UserController::class, 'update']);
+Route::get('/user/delete/{id}', [UserController::class, 'delete']);
+
 Route::get('/kategori', [KategoriController::class, 'index']);
-Route::get('/user', [UserController::class, 'index'])->name('user.index');
-Route::get('/user/tambah', [UserController::class, 'tambah'])->name('user.tambah');
-Route::post('/user/tambah_simpan', [UserController::class, 'tambah_simpan'])->name('user.tambah_simpan');
-Route::get('/user/ubah/{id}', [UserController::class, 'ubah'])->name('user.ubah');
-Route::put('/user/ubah_simpan/{id}', [UserController::class, 'ubah_simpan'])->name('user.ubah_simpan');
-Route::get('/user/hapus/{id}', [UserController::class, 'hapus'])->name('user.hapus');
-// Route::get('kategori', [KategoriController::class, 'index']);
-Route::get('kategori/create', [KategoriController::class, 'create'])->name('kategori.create');
-Route::post('kategori', [KategoriController::class, 'store']);
+Route::get('/kategori/create', [KategoriController::class, 'create'])->name('kategori.create');
+Route::post('/kategori', [KategoriController::class, 'store']);
 Route::get('/kategori/edit/{id}', [KategoriController::class, 'edit']);
 Route::put('/kategori/{id}', [KategoriController::class, 'update']);
-Route::get('kategori/delete/{id}', [KategoriController::class, 'delete']);
+Route::get('/kategori/delete/{id}', [KategoriController::class, 'delete']);
+
+Route::get('/level', [LevelController::class, 'index']);
+Route::get('/level/create', [LevelController::class, 'create'])->name('level.create');
+Route::post('/level', [LevelController::class, 'store']);
+Route::get('/level/edit/{id}', [levelController::class, 'edit']);
+Route::put('/level/{id}', [LevelController::class, 'update']);
+Route::get('/level/delete/{id}', [LevelController::class, 'delete']);

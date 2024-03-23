@@ -327,6 +327,16 @@ return [
             'url' => '/kategori',
             'icon' => 'fas fa-edit',
         ],
+        [
+            'text' => 'Manage User',
+            'url' => '/user',
+            'icon' => 'fas fa-user-plus',
+        ],
+        [
+            'text' => 'Manage Level',
+            'url' => '/level',
+            'icon' => 'fas fa-users',
+        ],
         ['header' => 'account_settings'],
         [
             'text' => 'profile',
