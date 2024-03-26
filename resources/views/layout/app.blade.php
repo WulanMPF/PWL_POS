@@ -67,5 +67,9 @@
             font-weight: 600;
         }
         */
+        .table-header {
+            background-color: #00206b;
+            color: #ffffff;
+        }
 </style> 
 @endpush  

@@ -1,4 +1,9 @@
 @extends('layout.app') 
+{{-- Customize layout sections --}}
+@section('subtitle', 'm_user')
+@section('content_header_title', 'Home') 
+@section('content_header_subtitle', 'm_user') 
+{{-- Content body: main page content --}}
 @section('content')
     <div class="row mt-5 mb-5">
         <div class="col-lg-12 margin-tb">
@@ -17,12 +22,12 @@
     @endif
     <table class="table table-bordered">
         <tr>
-            <th width="20px" class="text-center">User id</th>
-            <th width="150px" class="text-center">Level id</th>
-            <th width="200px"class="text-center">username</th>
-            <th width="200px"class="text-center">nama</th>
-            <th width="150px"class="text-center">password</th>
-            <th width="1000px"class="text-center"></th>
+            <th width="20px" class="text-center table-header">User id</th>
+            <th width="150px" class="text-center table-header">Level id</th>
+            <th width="200px"class="text-center table-header">Username</th>
+            <th width="200px"class="text-center table-header">Nama</th>
+            <th width="150px"class="text-center table-header">Password</th>
+            <th width="1000px"class="text-center table-header">Action</th>
         </tr>
         @foreach ($useri as $m_user)
             <tr>

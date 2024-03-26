@@ -1,4 +1,9 @@
 @extends('layout.app')
+{{-- Customize layout sections --}}
+@section('subtitle', 'Create')
+@section('content_header_title', 'm_user') 
+@section('content_header_subtitle', 'Create') 
+{{-- Content body: main page content --}}
 @section('content')
     <div class="row mt-5 mb-5">
         <div class="col-lg-12 margin-tb">
