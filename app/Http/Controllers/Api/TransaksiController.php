@@ -21,7 +21,7 @@ class TransaksiController extends Controller
 
     public function show(TransaksiModel $transaksi)
     {
-        $transaksiWithImage = TransaksiModel::with('barang')->find($transaksi->barang_id);
+        $transaksiWithImage = TransaksiModel::with('barang')->find($transaksi->detail_id);
         return response()->json($transaksiWithImage);
     }
 
