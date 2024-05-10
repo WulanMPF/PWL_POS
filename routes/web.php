@@ -116,6 +116,9 @@ Route::group(['middleware' => ['auth']], function () {
 Route::get('/file-upload', [FileUploadController::class, 'fileUpload']);
 Route::post('/file-upload', [FileUploadController::class, 'prosesFileUpload']);
 
+Route::get('/file-upload-rename', [FileUploadController::class, 'fileUploadRename']);
+Route::post('/file-upload-rename', [FileUploadController::class, 'prosesFileUploadRename']);
+
 // Route::get('/user', [UserController::class, 'index']);
 // Route::get('/user/create', [UserController::class, 'create'])->name('user.create');
 // Route::post('/user', [UserController::class, 'store']);
