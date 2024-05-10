@@ -38,6 +38,7 @@
                         <th>Username</th>
                         <th>Nama</th>
                         <th>Level Pengguna</th>
+                        <th>Foto Pengguna</th>
                         <th>Aksi</th>
                     </tr>
                 </thead>
@@ -58,7 +59,7 @@
                     "url": "{{ url('user/list') }}",
                     "dataType": "json",
                     "type": "POST",
-                    "data": function (d) {
+                    "data": function(d) {
                         d.level_id = $('#level_id').val();
                     }
                 },
@@ -83,6 +84,14 @@
                     orderable: false, // orderable: true, jika ingin kolom ini bisa diurutkan
                     searchable: false // searchable: true, jika ingin kolom ini bisa dicari
                 }, {
+                    data: "image",
+                    className: "",
+                    orderable: false,
+                    searchable: false,
+                    render: function(data, type, row) {
+                        return '<img src="' + data + '" alt="Image" class="img-thumbnail" width="100">';
+                    }
+                }, {
                     data: "aksi",
                     className: "",
                     orderable: false, // orderable: true, jika ingin kolom ini bisa diurutkan
@@ -92,7 +101,7 @@
 
             S('#level_id').on('change', function() {
                 dataUser.ajax.reload();
-            }) ;
+            });
 
         });
     </script>

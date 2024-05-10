@@ -39,6 +39,7 @@
                         <th>Kategori</th>
                         <th>Kode Barang</th>
                         <th>Nama Barang</th>
+                        <th>Gambar Barang</th>
                         <th>Aksi</th>
                     </tr>
                 </thead>
@@ -54,51 +55,60 @@
     <script>
         $(document).ready(function() {
             var dataBarang = $('#table_barang').DataTable({
-                serverSide: true, 
+                serverSide: true,
                 ajax: {
                     "url": "{{ url('barang/list') }}",
                     "dataType": "json",
                     "type": "POST",
-                    "data": function (d) {
+                    "data": function(d) {
                         d.kategori_id = $('#kategori_id').val();
                     }
                 },
                 columns: [{
-                    data: "DT_RowIndex",
-                    className: "text-center",
-                    orderable: false,
-                    searchable: false
-                }, {
-                    data: "barang_id",
-                    className: "",
-                    orderable: true,
-                    searchable: true
-                }, {
-                    data: "kategori.kategori_nama",
-                    className: "",
-                    orderable: true,
-                    searchable: true
-                }, {
-                    data: "barang_kode",
-                    className: "",
-                    orderable: true,
-                    searchable: true
-                }, {
-                    data: "barang_nama",
-                    className: "",
-                    orderable: true,
-                    searchable: true
-                }, {
-                    data: "aksi",
-                    className: "",
-                    orderable: false,
-                    searchable: false
-                }]
+                        data: "DT_RowIndex",
+                        className: "text-center",
+                        orderable: false,
+                        searchable: false
+                    }, {
+                        data: "barang_id",
+                        className: "",
+                        orderable: true,
+                        searchable: true
+                    }, {
+                        data: "kategori.kategori_nama",
+                        className: "",
+                        orderable: true,
+                        searchable: true
+                    }, {
+                        data: "barang_kode",
+                        className: "",
+                        orderable: true,
+                        searchable: true
+                    }, {
+                        data: "barang_nama",
+                        className: "",
+                        orderable: true,
+                        searchable: true
+                    }, {
+                        data: "image",
+                        className: "",
+                        orderable: false,
+                        searchable: false,
+                        render: function(data, type, row) {
+                            return '<img src="' + data + '" alt="Image" class="img-thumbnail" width="100">';
+                        }
+                    }, {
+                        data: "aksi",
+                        className: "",
+                        orderable: false,
+                        searchable: false
+                    }
+                ]
             });
 
             S('#kategori_id').on('change', function() {
                 dataBarang.ajax.reload();
-            }) ;
+            });
 
         });
     </script>

@@ -30,7 +30,7 @@ class BarangController extends Controller
 
     public function list(Request $request)
     {
-        $barang = BarangModel::select('barang_id', 'kategori_id', 'barang_kode', 'barang_nama', 'harga_beli', 'harga_jual')
+        $barang = BarangModel::select('barang_id', 'kategori_id', 'barang_kode', 'barang_nama', 'harga_beli', 'harga_jual', 'image')
             ->with('kategori');
 
         if ($request->kategori_id) {
@@ -38,8 +38,8 @@ class BarangController extends Controller
         }
 
         return DataTables::of($barang)
-            ->addIndexColumn() 
-            ->addColumn('aksi', function ($barang) { 
+            ->addIndexColumn()
+            ->addColumn('aksi', function ($barang) {
                 $btn = '<a href="' . url('/barang/' . $barang->barang_id) . '" class="btn btn-info btn-sm">Detail</a> ';
                 $btn .= '<a href="' . url('/barang/' . $barang->barang_id . '/edit') . '" class="btn btn-warning btn-sm">Edit</a> ';
                 $btn .= '<form class="d-inline-block" method="POST" action="' . url('/barang/' . $barang->barang_id) . '">'
@@ -47,7 +47,7 @@ class BarangController extends Controller
                     '<button type="submit" class="btn btn-danger btn-sm" onclick="return confirm(\'Apakah Anda yakin menghapus data ini?\');">Hapus</button></form>';
                 return $btn;
             })
-            ->rawColumns(['aksi']) 
+            ->rawColumns(['aksi'])
             ->make(true);
     }
 
@@ -63,7 +63,7 @@ class BarangController extends Controller
         ];
 
         $kategori = KategoriModel::all();
-        $activeMenu = 'barang'; 
+        $activeMenu = 'barang';
 
         return view('barang.create', ['breadcrumb' => $breadcrumb, 'page' => $page, 'kategori' => $kategori, 'activeMenu' => $activeMenu]);
     }
@@ -73,17 +73,26 @@ class BarangController extends Controller
         $request->validate([
             'kategori_id'   => 'required|integer',
             'barang_kode'   => 'required|string|min:3|unique:m_barang,barang_kode',
-            'barang_nama'   => 'required|string|max:100', 
+            'barang_nama'   => 'required|string|max:100',
             'harga_beli'    => 'required|integer',
-            'harga_jual'    => 'required|integer' 
+            'harga_jual'    => 'required|integer',
+            'image'         => 'required|file|image|max:2048'
         ]);
+
+        $extfile = $request->image->getClientOriginalName();
+        $namaFile = 'web-' . time() . "." . $extfile;
+
+        $path = $request->image->move('gbrStarterCode', $namaFile);
+        $path = str_replace("\\", "//", $path);
+        $pathBaru = asset('gbrStarterCode/' . $namaFile);
 
         BarangModel::create([
             'kategori_id'   => $request->kategori_id,
             'barang_kode'   => $request->barang_kode,
-            'barang_nama'   => $request->barang_nama, 
+            'barang_nama'   => $request->barang_nama,
             'harga_beli'    => $request->harga_beli,
-            'harga_jual'    => $request->harga_jual
+            'harga_jual'    => $request->harga_jual,
+            'image'         => $pathBaru
         ]);
 
         return redirect('/barang')->with('success', 'Data barang berhasil disimpan');
@@ -131,17 +140,26 @@ class BarangController extends Controller
         $request->validate([
             'kategori_id'   => 'required|',
             'barang_kode'   => 'required|string|min:3',
-            'barang_nama'   => 'required|string|max:100', 
+            'barang_nama'   => 'required|string|max:100',
             'harga_beli'    => 'required|integer',
-            'harga_jual'    => 'required|integer'
+            'harga_jual'    => 'required|integer',
+            'image'         => 'required|file|image|max:2048'
         ]);
+
+        $extfile = $request->image->getClientOriginalName();
+        $namaFile = 'web-' . time() . "." . $extfile;
+
+        $path = $request->image->move('gbrStarterCode', $namaFile);
+        $path = str_replace("\\", "//", $path);
+        $pathBaru = asset('gbrStarterCode/' . $namaFile);
 
         BarangModel::find($id)->update([
             'kategori_id'   => $request->kategori_id,
             'barang_kode'   => $request->barang_kode,
-            'barang_nama'   => $request->barang_nama, 
+            'barang_nama'   => $request->barang_nama,
             'harga_beli'    => $request->harga_beli,
-            'harga_jual'    => $request->harga_jual
+            'harga_jual'    => $request->harga_jual,
+            'image'         => $pathBaru
         ]);
 
         return redirect('/barang')->with('success', 'Data barang berhasil diubah');
@@ -150,12 +168,12 @@ class BarangController extends Controller
     public function destroy(string $id)
     {
         $check = BarangModel::find($id);
-        if (!$check) { 
+        if (!$check) {
             return redirect('/barang')->with('error', 'Data barang tidak ditemukan');
         }
 
         try {
-            BarangModel::destroy($id); 
+            BarangModel::destroy($id);
 
             return redirect('/barang')->with('success', 'Data barang berhasil dihapus');
         } catch (\Illuminate\Database\QueryException $e) {
